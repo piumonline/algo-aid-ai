@@ -13,6 +13,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+//find complexity
 app.post("/find-complexity", async (req, res) => {
 
   try {
@@ -21,11 +22,49 @@ app.post("/find-complexity", async (req, res) => {
       model: "text-davinci-003",
       prompt: `
               ${prompt} 
-              """ The time complexity of this function is and why is that
+              """ The time complexity of this function is and discribe why is that
               
             `,
             temperature: 0,
-            max_tokens: 64,
+            max_tokens: 100,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+            stop: ["\n"],
+    });
+
+    console.log(prompt)
+
+    return res.status(200).json({      
+      success: true,
+      data: response.data.choices[0].text,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error.response
+        ? error.response.data
+        : "There was an issue on the server",
+    });
+  }
+});
+
+//explin code
+app.post("/explin-code", async (req, res) => {
+
+  try {
+    const  {prompt}  = req.body;
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: `
+              ${prompt} 
+              """ Here's what the above class is doing, explained in a concise way:
+              """
+              1.
+              
+            `,
+            temperature: 0,
+            max_tokens: 200,
             top_p: 1.0,
             frequency_penalty: 0.0,
             presence_penalty: 0.0,
