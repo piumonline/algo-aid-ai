@@ -16,24 +16,25 @@ const openai = new OpenAIApi(configuration);
 app.post("/find-complexity", async (req, res) => {
 
   try {
-    const { prompt } = req.body;
+    const  {prompt}  = req.body;
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `
-              ${prompt}
-      
-              The time complexity of this function is
+              ${prompt} 
+              """ The time complexity of this function is and why is that
               
             `,
-      max_tokens: 64,
-      temperature: 0,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-      stop: ["\n"],
+            temperature: 0,
+            max_tokens: 64,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+            stop: ["\n"],
     });
 
-    return res.status(200).json({
+    console.log(prompt)
+
+    return res.status(200).json({      
       success: true,
       data: response.data.choices[0].text,
     });
