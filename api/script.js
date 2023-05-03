@@ -22,7 +22,7 @@ app.post("/find-complexity", async (req, res) => {
       model: "text-davinci-003",
       prompt: `
               ${prompt} 
-              """ The time complexity of this function is and discribe why is that
+              """ The time complexity of this function is \n and discribe why is that
               
             `,
             temperature: 0,
@@ -58,13 +58,12 @@ app.post("/explin-code", async (req, res) => {
       model: "text-davinci-003",
       prompt: `
               ${prompt} 
-              """ Here's what the above class is doing, explained in a concise way:
+              """ give good explanation what is the given code is doing, what is the output of the code? , explan in a concise way with examples :
               """
-              1.
               
             `,
-            temperature: 0,
-            max_tokens: 200,
+            temperature: 0.5,
+            max_tokens: 600,
             top_p: 1.0,
             frequency_penalty: 0.0,
             presence_penalty: 0.0,
@@ -83,6 +82,42 @@ app.post("/explin-code", async (req, res) => {
       error: error.response
         ? error.response.data
         : "There was an issue on the server",
+    });
+  }
+});
+
+//translate code
+app.post("/translator", async (req, res) => {
+
+  try {
+    const  {prompt, selectedValue, translatedValue}  = req.body;
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: `
+      ##### Translate this function  from ${selectedValue} into ${translatedValue}\n### ${selectedValue}\n    \n    ${prompt}  \n### ${translatedValue}
+
+              
+            `,
+            temperature: 0,
+            max_tokens: 600,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+            stop: ["###"],
+    });
+
+    console.log(prompt)
+
+    return res.status(200).json({      
+      success: true,
+      data: response.data.choices[0].text,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error.response
+        ? error.response.data
+        : error,
     });
   }
 });

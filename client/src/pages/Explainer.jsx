@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client';
 import axios from "axios";
 import bigO from '../img/ss.png';
+import Dot from '../components/Dot'
 
 function Home() {
   const [prompt, setPrompt] = useState("");
@@ -27,6 +28,8 @@ function Home() {
 
   // console.log(document.getElementById("myTextarea").value)
 
+  
+
   return (
 
     <div className='flex bg-black h-screen scrollbar scrollbar-thin pt-3'>
@@ -36,7 +39,8 @@ function Home() {
       <textarea wrap="off" rows="25" cols="90" value={prompt} onChange={(e) => setPrompt(e.target.value)} 
       className='bg-white border-solid border-10 rounded-3xl border-white p-5 pl-10 m-1'/>
       <button onClick={handleSubmit} className='border-2 border-black text-black absolute bottom-5 right-5  m-1 text-xl font-bold w-12 h-12 rounded-full items-center justify-center pb-1 px-4 bg-white hover:bg-amber-300'>&gt; </button>
-      
+      <div className='absolute top-4 left-5  bg-red-200'><Dot /></div>
+
       </div>
       
       <div>

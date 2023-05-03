@@ -2,30 +2,39 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client';
 import axios from "axios";
 import bigO from '../img/ss.png';
+import Dot from '../components/Dot'
 
 function Translator() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [translatedValue, setTranslatedValue] = useState("");
+
+  const handleSelectChange1 = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const handleSelectChange2 = (event) => {
+    setTranslatedValue(event.target.value);
+  };
+
+  console.log(selectedValue)
 
   const handleSubmit = (e) => {
-    console.log("pressed")
-
     e.preventDefault();
 
     // Send a request to the server with the prompt
     axios
-      .post("http://localhost:8080/translator", { prompt })
+      .post("http://localhost:8080/translator", { prompt:prompt, selectedValue:selectedValue, translatedValue:translatedValue})
       .then((res) => {
         // Update the response state with the server's response
         setResponse(res.data.data);
-        console.log(response)
+        // console.log(response)
       })
       .catch((err) => {
         console.error(err);
       });
   };
-
-  // console.log(document.getElementById("myTextarea").value)
 
   return (
 
@@ -34,10 +43,20 @@ function Translator() {
       
       <div className='relative'>
       <textarea wrap="off" rows="25" cols="85" value={prompt} onChange={(e) => setPrompt(e.target.value)} 
-      className='bg-black backdrop-blur-sm bg-white/20 border-solid rounded-3xl border-2 border-white p-5 pl-10 m-1 text-white'/>
-      <hr className='absolute bottom-10'/>
-      <button onClick={handleSubmit} className='border-2 border-black text-black absolute bottom-5 right-5  m-1 text-xl font-bold w-12 h-12 rounded-full items-center justify-center pb-1 px-4 bg-white hover:bg-amber-300'>&gt; </button>
+      className='border-solid rounded-3xl border-2 border-white p-6 pl-10 m-1 text-white backdrop-saturate-125 bg-white/30'/>
+      {/* dropdown */}
+      <div className=' absolute top-2 left-80 mt-2'>
+        <select value={selectedValue} onChange={handleSelectChange1} className="bg-transparent" >
+          <option value="">Select Language</option>
+          <option value="C#">C#</option>
+          <option value="Java">Java</option>
+          <option value="Java Script">Java Script</option>
+        </select>
+      </div>
       
+      <div className='absolute top-4 left-5  bg-red-200'><Dot /></div>
+      <button onClick={handleSubmit} className='border-2 border-black text-black absolute bottom-5 right-5  m-1 text-xl font-bold w-12 h-12 rounded-full items-center justify-center pb-1 px-4 bg-white hover:bg-amber-300'>&gt; </button>
+
       </div>
       
       <div>
@@ -54,8 +73,20 @@ function Translator() {
           <img src={bigO}/>
       </textarea> */}
 
-      <div contentEditable="true" className='bg-black border-solid border-2 rounded-3xl border-white p-5 pl-6 pt-6 m-1 text-white overflow-auto ml-4 ml-2 w-130 h-128  '>
+      <div contentEditable="false" className='backdrop-saturate-125 bg-regal-blue/40 border-solid border-2 rounded-3xl border-white px-5 pl-6 m-1 text-white overflow-auto ml-4 ml-2 w-130 h-128  '>
           {/* <img src={bigO} className='border rounded-3xl mb-6'/> */}
+          <div className='absolute top-24 bg-red-200'><Dot /></div>
+          
+          {/* dropdown */}
+          <div className=' justify-center flex relative mt-2'>
+            <select value={translatedValue} onChange={handleSelectChange2} className="bg-transparent" >
+              <option value="">Select Language</option>
+              <option value="C#">C#</option>
+              <option value="Java">Java</option>
+              <option value="Java Script">Java Script</option>
+            </select>
+          </div>
+
           <p className='text-white '>
             {response}
           </p>
@@ -65,19 +96,6 @@ function Translator() {
     </div>
 
 // bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500
-
-    // <div>
-    //   <form onSubmit={handleSubmit}>
-    //     <input
-    //       type="text"
-    //       value={prompt}
-    //       onChange={(e) => setPrompt(e.target.value)}
-    //       className='bg-white border-solid border-2 border-sky-500'
-    //     />
-    //     <button type="submit" className='border-solid border-2 border-sky-500'>Submit</button>
-    //   </form>
-    //   <p>{response}</p>
-    // </div>
   );
 }
 
