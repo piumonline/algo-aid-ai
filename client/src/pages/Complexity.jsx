@@ -54,7 +54,7 @@ function Complexity() {
         </p>
         </div>
         
-        <textarea id="w3" rows="8" cols="47" value={response} placeholder='wzesxrdctfvgybhunjimok,qazwsexdcrftvgybhunjimkowazsexdrcftvgybhunjimk'
+        <textarea id="w3" rows="8" cols="47" value={response} placeholder='The time complexity of this function is because,'
         className='bg-emerald-400 border-solid rounded-3xl text-justify border-emerald-400 border-2 p-5 m-1 text-xl'/>
       </div>
       </div>
