@@ -28,7 +28,7 @@ function Navbar() {
             <Link to='/explainer'><li className={`py-2 px-8 mx-2 text-white border border-bg-amber-300 rounded-full font-semibold ${pathMathRouter("/explainer") && "bg-amber-300 text-black border-black font-semibold"}`}>Explainer</li></Link>
             <Link to='/translator'><li className={`py-2 px-8 mx-2 text-white border border-white rounded-full font-semibold  ${pathMathRouter("/translator") && "bg-amber-300 text-black border-black font-semibold"}`}>Translate</li></Link>
             {/* <Link to='/learn'><li className={`py-2 px-8 mx-2 text-white border border-white rounded-full font-semibold ${pathMathRouter("/Donno") && "bg-amber-300 text-black border-black font-semibold"}`}>Write</li></Link> */}
-            <Link to='/learn'><li className={`py-2 px-8 mx-2 text-white border border-white rounded-full font-semibold ${pathMathRouter("/Donno") && "bg-amber-300 text-black border-black font-semibold"}`}>Bug Fixer</li></Link>
+            <Link to='/bugfix'><li className={`py-2 px-8 mx-2 text-white border border-white rounded-full font-semibold ${pathMathRouter("/bugfix") && "bg-amber-300 text-black border-black font-semibold"}`}>Bug Fixer</li></Link>
         </ul>
         </div>
         </div>
